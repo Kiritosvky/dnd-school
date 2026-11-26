@@ -24,6 +24,8 @@ SOFTWARE.
 
 # DND School
 
+[![Скачать APK](https://img.shields.io/badge/%D0%A1%D0%BA%D0%B0%D1%87%D0%B0%D1%82%D1%8C_APK-v1.0-2ea44f?style=for-the-badge&logo=android&logoColor=white)](https://github.com/Kiritosvky/dnd-school/releases/tag/v1.0)
+
 Тихий режим по таймеру и таймер до перемены. Для Samsung S23 Ultra, Android 16 (One UI), minSdk 26.
 
 ## Что делает
