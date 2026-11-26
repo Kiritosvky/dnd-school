@@ -30,8 +30,6 @@ import android.content.Intent;
 public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context c, Intent i) {
-        Dbg.init(c);
-        Dbg.log("boot " + i.getAction());
         long end = Dnd.p(c).getLong("end", 0);
         if (end > System.currentTimeMillis()) Dnd.on(c, end);
         else Dnd.off(c);

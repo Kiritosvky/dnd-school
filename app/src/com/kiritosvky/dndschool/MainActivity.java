@@ -83,8 +83,6 @@ public class MainActivity extends Activity {
 
     @Override protected void onCreate(Bundle b) {
         super.onCreate(b);
-        Dbg.init(this);
-        Dbg.log("start " + Dbg.env() + " access=" + Dnd.access(this));
         d = getResources().getDisplayMetrics().density;
         bg = p().getInt("bg", bg);
         fg = p().getInt("fg", fg);
@@ -301,7 +299,6 @@ public class MainActivity extends Activity {
     void setTab(int i) {
         tab = i;
         p().edit().putInt("tab", i).apply();
-        Dbg.log("tab " + i);
         pDnd.setVisibility(i == 0 ? View.VISIBLE : View.GONE);
         pSchool.setVisibility(i == 1 ? View.VISIBLE : View.GONE);
         tDnd.setBackground(i == 0 ? pill(ac) : null);
@@ -319,7 +316,6 @@ public class MainActivity extends Activity {
 
     void startTimer() {
         long sec = val(eH) * 3600L + val(eM) * 60L + val(eS);
-        Dbg.log("timer " + sec + "s access=" + Dnd.access(this));
         if (sec <= 0) return;
         Dnd.on(this, System.currentTimeMillis() + sec * 1000);
         if (!Dnd.access(this)) startActivity(
@@ -399,18 +395,14 @@ public class MainActivity extends Activity {
         EditText c1 = hexField(bg);
         EditText c2 = hexField(fg);
         EditText c3 = hexField(ac);
-        EditText c4 = numField("192.168.1.10:8765", base);
-        c4.setInputType(InputType.TYPE_CLASS_TEXT);
-        c4.setGravity(Gravity.START);
-        c4.setText(p().getString("log", ""));
         addRow(v, "Фон", c1);
         addRow(v, "Текст", c2);
         addRow(v, "Акцент", c3);
-        addRow(v, "Лог-сервер", c4);
         TextView sizeLabel = tv("Размер текста", base);
         sizeLabel.setPadding(0, dp(14), 0, 0);
         v.addView(sizeLabel);
-        SeekBar sb = new SeekBar(this);        sb.setMax(52);
+        SeekBar sb = new SeekBar(this);
+        sb.setMax(52);
         sb.setProgress(Math.round(base) - 10);
         v.addView(sb);
 
@@ -436,7 +428,6 @@ public class MainActivity extends Activity {
                             .putInt("ac", parseColor(c3.getText().toString(), ac))
                             .putFloat("size", sb.getProgress() + 10)
                             .putBoolean("bold", cb.isChecked())
-                            .putString("log", c4.getText().toString().trim())
                             .apply();
                     recreate();
                 })

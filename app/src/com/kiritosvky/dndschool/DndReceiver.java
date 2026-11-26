@@ -30,8 +30,6 @@ import android.content.Intent;
 public class DndReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context c, Intent i) {
-        Dbg.init(c);
-        Dbg.log("alarm fire");
         Dnd.off(c);
     }
 }

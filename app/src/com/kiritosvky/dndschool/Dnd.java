@@ -72,27 +72,22 @@ final class Dnd {
 
     static void apply(Context c) {
         if (access(c)) nm(c).setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE);
-        StringBuilder r = new StringBuilder("apply filter=" + nm(c).getCurrentInterruptionFilter());
         for (int st : STREAMS) {
             try {
                 am(c).setStreamVolume(st, 0, 0);
-            } catch (SecurityException e) {
-                r.append(" volume-denied:").append(st);
+            } catch (SecurityException ignored) {
             }
         }
         try {
             am(c).setRingerMode(AudioManager.RINGER_MODE_SILENT);
-        } catch (SecurityException e) {
-            r.append(" ringer-denied");
+        } catch (SecurityException ignored) {
         }
-        r.append(" ringer=").append(am(c).getRingerMode());
-        for (int st : STREAMS) r.append(' ').append(st).append('=').append(am(c).getStreamVolume(st));
-        Dbg.log(r.toString());
     }
 
     static void off(Context c) {
         SharedPreferences s = p(c);
-        String[] v = s.getString("v", "").split(",");        for (int i = 0; i < STREAMS.length && i < v.length; i++) {
+        String[] v = s.getString("v", "").split(",");
+        for (int i = 0; i < STREAMS.length && i < v.length; i++) {
             try {
                 am(c).setStreamVolume(STREAMS[i], Integer.parseInt(v[i].trim()), 0);
             } catch (Exception ignored) {
@@ -103,7 +98,6 @@ final class Dnd {
         }
         s.edit().remove("end").remove("f").remove("v").apply();
         cancel(c);
-        Dbg.log("off ringer=" + am(c).getRingerMode() + " filter=" + nm(c).getCurrentInterruptionFilter());
     }
 
     static PendingIntent pi(Context c) {
